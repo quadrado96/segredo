@@ -19,6 +19,8 @@ class NovoCarro : AppCompatActivity() {
             insets
         }
 
+        supportActionBar?.hide()
+
         val botaoSalvar = findViewById<ImageButton>(R.id.btnSalvar)
         botaoSalvar.setOnClickListener {
             val marca = findViewById<EditText>(R.id.edtMarca).text.toString()

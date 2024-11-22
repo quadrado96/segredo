@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuId"
+        android:title="Id" />
+    <item
+        android:id="@+id/menuMarca"
+        android:checkable="false"
+        android:title="Marca" />
+    <item
+        android:id="@+id/menuModelo"
+        android:checkable="false"
+        android:title="Modelo" />
+    <item
+        android:id="@+id/menuAno"
+        android:checkable="false"
+        android:title="Ano" />
+</menu>

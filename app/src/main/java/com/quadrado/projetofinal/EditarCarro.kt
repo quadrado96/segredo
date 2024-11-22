@@ -19,6 +19,8 @@ class EditarCarro : AppCompatActivity() {
             insets
         }
 
+        supportActionBar?.hide()
+
         val botaoConfirmarEdicao = findViewById<ImageButton>(R.id.btnSalvarEdicao)
         botaoConfirmarEdicao.setOnClickListener{
 
