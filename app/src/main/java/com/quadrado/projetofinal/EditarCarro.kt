@@ -2,6 +2,7 @@ package com.quadrado.projetofinal
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,6 +22,20 @@ class EditarCarro : AppCompatActivity() {
         val botaoConfirmarEdicao = findViewById<ImageButton>(R.id.btnSalvarEdicao)
         botaoConfirmarEdicao.setOnClickListener{
 
+            val carroId = intent.getIntExtra("carroId", -1)
+            if (carroId != -1) {
+                val carroSelecionado = Database.getInstance(this)!!.carroDAO().buscarPorId(carroId)
+
+                val novaPlaca = findViewById<TextView>(R.id.edtNovaPlaca).text.toString()
+                val novoAno = findViewById<TextView>(R.id.edtNovoAno).text.toString().toInt()
+
+                carroSelecionado.placa = novaPlaca
+                carroSelecionado.ano = novoAno
+
+                Database.getInstance(this)!!.carroDAO().atualizar(carroSelecionado)
+
+                finish()
+            }
         }
 
         val botaoCancelarEdicao = findViewById<ImageButton>(R.id.btnCancelarEdicao)

@@ -12,6 +12,9 @@ interface CarroDAO {
     @Insert
     fun salvar(c: Carro)
 
+    @Query("SELECT * FROM Carro WHERE id = :id")
+    fun buscarPorId(id: Int): Carro
+
     @Query("SELECT * FROM Carro ORDER BY id")
     fun listarId(): List<Carro>
 

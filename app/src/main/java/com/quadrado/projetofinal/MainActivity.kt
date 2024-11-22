@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val listaCarros = findViewById<ListView>(R.id.listaCarros)
+        listaCarros = findViewById<ListView>(R.id.listaCarros)
         listaCarros.setOnItemClickListener { _, _, position, _ ->
             val carroSelecionado = Database.getInstance(this)!!.carroDAO().listarId()[position]
             val intentEdicao = Intent(this, EditarCarro::class.java)
@@ -39,6 +40,28 @@ class MainActivity : AppCompatActivity() {
         botaoAddCarro.setOnClickListener {
             startActivity(intentNovoCarro)
         }
+
+        listaCarros = findViewById<ListView>(R.id.listaCarros)
+        listaCarros.setOnItemLongClickListener { _, _, position, _ ->
+            val carroSelecionado = Database.getInstance(this)!!.carroDAO().listarId()[position]
+
+            AlertDialog.Builder(this).apply {
+                setTitle("Remover Carro")
+                setMessage("Tem certeza?")
+                setPositiveButton("Remover") { _, _ ->
+                    Database.getInstance(this@MainActivity)!!.carroDAO().apagar(carroSelecionado)
+
+                    atualizarLista()
+                }
+                setNegativeButton("Cancelar") { dialog, _ ->
+
+                    dialog.dismiss()
+                }
+            }.create().show()
+
+            true
+        }
+
     }
 
     override fun onResume() {
@@ -50,11 +73,8 @@ class MainActivity : AppCompatActivity() {
         val listaDeCarros = findViewById<ListView>(R.id.listaCarros)
         val listaBD = Database.getInstance(this)!!.carroDAO().listarId()
 
-        if (listaBD.isEmpty()) {
-            Toast.makeText(this, "Nenhum carro cadastrado.", Toast.LENGTH_SHORT).show()
-        } else {
-            val listaAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listaBD)
-            listaDeCarros.adapter = listaAdapter
-        }
+        val listaAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listaBD)
+        listaDeCarros.adapter = listaAdapter
+
     }
 }
